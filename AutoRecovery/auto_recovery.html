@@ -1,0 +1,193 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+	<meta charset="utf-8" />     
+    <link href="Styling/AutoRecovery.css" rel="stylesheet" />
+    <script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>    
+    <script src="scripts/garlic.js"></script>
+    <script src="scripts/pbkdf2.js"></script>
+    <script src="scripts/aes.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/pbkdf2.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+            crossorigin="anonymous"></script>
+</head>
+<body>
+    <form data-persist="garlic" method="POST">
+        <table class="DocContainer DocOutline" cellspacing="0">    
+            <tr>
+                <td class="DocContainerLeft">
+                    <table class="DocOutline">
+                        <tr>
+                            <td class="DocTitleRow" colspan="2">
+                                <table class="DocTitle">
+                                    <tr>
+                                        <td class="DocTitle">Case Note</td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="DocLabelLeft" style="width:88px">
+                                <div id="lblAuthor" class="FalseLink ClinicalNoteForm_Author">Author*</div>
+                            </td>
+                            <td class="DocValue">
+                                Keerthana
+                            </td>
+                        </tr>
+                        <tr id="SeperateCategoryRow">
+                            <td class="DocLabelLeft">
+                                <div id="lblNoteCategory" class="FalseLink ClinicalNoteForm_Category">Category*</div>
+                            </td>
+                            <td class="DocValue"></td>
+
+                        </tr>
+                        <tr>
+                            <td class="DocLabelLeft">
+                                <div id="lblNoteType" class="FalseLink ClinicalNoteForm_Type">Type*</div>
+                            </td>
+                            <td class="DocValue">
+                                Types
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="DocLabelLeft">Summary*</td>
+                            <td class="DocValue">
+                                <input id="ClinicalNoteSummary" class="garlic-auto-save" MaxLength="255" onchange="ValidateTextWithHTML(this)" />
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td class="DocContainerRight">
+                    <table class="DocOutline">
+                        <tr>
+                            <td class="DocTitleRow" colspan="2">
+                                <table class="DocTitle">
+                                    <tr>
+                                        <td class="DocTitle">Note Date</td>
+                                        <td class="DocTitleQuarter"></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="DocLabelLeft"><div id="lblClinicalNoteDate_IconLabel" class="DateLabel">Date*</div></td>
+                            <td class="DocValue ClinicalNoteForm_ClinicalNoteDate">
+                              <input type="date" id="garDate" class="garlic-auto-save" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="DocLabelLeft class="garlic-auto-save"">Time*</td>
+                            <td> 
+                           <input type="time" id="ClinicalNoteTime" class="garlic-auto-save" MaxLength="5" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="DocLabelLeft">
+                                Date Entered:
+                            </td>
+                            <td class="DocValue">
+                                12-12-18
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+
+            <tr>
+                <td class="DocContainerFull" colspan="2" style="padding-top:0">
+                    <table class="DocOutline">
+                        <tr>
+                            <td class="DocLabelLeft" style="vertical-align:top; width:88px">
+                                <div id="lblClinicalNote" class="FalseLink ClinicalNoteForm_Note">Note</div>
+                            </td>
+                            <td class="DocValue">
+                                <textarea id="ClinicalNoteText" class="garlic-auto-save" Rows="16" TextMode="MultiLine" Style="width: 98%" onchange="ValidateTextWithHTML(this)"></textarea>                            
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+         </table>             
+    </form>
+    <script type="text/javascript">
+        debugger;
+        var garStrPath = "garlic:localhost/auto_recovery.html>form>";
+        garlicCheck();
+        function garlicCheck() {
+            var dataList = [
+        { txtSummary: garStrPath + "input" },
+        { txtNotes: garStrPath + "textarea" },
+        {txtDate: garStrPath + "date"}
+            ];
+        }
+        
+        var txtSummary = "garlic:localhost/auto_recovery.html>form>input";
+        var txtNotes = "garlic:localhost/auto_recovery.html>form>textarea";
+        var txtDate = "garlic:localhost/auto_recovery.html>form>date";
+
+        var encdata = localStorage.getItem(txtSummary) + localStorage.getItem(txtNotes);
+
+        var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz*&-%/!?*+=()";
+        var keyLength = 10;
+        var genKey = generateKey(keyLength);                
+        var encStr = encrypt(encdata, genKey);
+        var decStr = decrypt(encStr, genKey);
+            
+            function generateKey(keyLength){
+                var randomstring = '';
+  
+                for (var i=0; i < keyLength; i++) {
+                    var rnum = Math.floor(Math.random() * chars.length);
+                    randomstring += chars.substring(rnum,rnum+1);
+                }
+                return randomstring;
+            }
+
+            function encrypt(msg, pass) {
+                debugger;
+                //var salt = CryptoJS.lib.WordArray.random(128 / 8);
+
+                //var key = CryptoJS.PBKDF2(pass, salt, {
+                //  keySize: keySize / 32,
+                //  iterations: iterations
+                //});
+
+                //var iv = CryptoJS.lib.WordArray.random(128 / 8);                
+                var encrypted = CryptoJS.AES.encrypt(msg, pass);
+
+                // salt, iv will be hex 32 in length
+                // append them to the ciphertext for use  in decryption
+                var transitmessage = encrypted.toString();
+                return transitmessage;
+            }
+
+            function decrypt(encStr, pass) {
+                debugger;
+                var decrypted = CryptoJS.AES.decrypt(encStr, pass);
+                return decrypted.toString(CryptoJS.enc.Utf8);
+            }        
+
+            if (localStorage.getItem(txtSummary) || localStorage.getItem(txtNotes) || localStorage.getItem(txtDate)) {                
+            if (confirm("Do you want to retieve the data?")) {
+                alert("Data retrieved successfully!");
+            }
+            else {
+                localStorage.clear();
+            }
+        }        
+
+        function ValidateTextWithHTML(controlId) {
+            if (document.getElementById(controlId.id).value.length > 0) {
+                var strtext = remove_non_ascii(document.getElementById(controlId.id).value);
+                var html = strtext;
+                var div = document.createElement("div");
+                div.innerHTML = html;
+                var text = div.textContent || div.innerText || "";
+                document.getElementById(controlId.id).value = "";
+                document.getElementById(controlId.id).value = text;
+            }
+        }
+    </script>
+</body>
+</html>

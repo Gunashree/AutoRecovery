@@ -1,0 +1,102 @@
+﻿.DocLabelLeft
+{
+	background-color: #F5F6FF;
+	width: 100px;
+	padding: 3px;
+	vertical-align: middle;
+	border: none;
+	border-bottom: solid 1px #1A5993;
+	border-right: solid 1px #1A5993;
+	border-left: outset 2px #1A5993;
+}
+
+.DocValue
+{
+	padding: 1px 1px 1px 3px;
+	vertical-align: middle;
+	border: none;
+	border-bottom: solid 1px #CCCCCC;
+	border-right: solid 1px #CCCCCC;
+}
+
+.DocContainerLeft
+{
+	width: 50%;
+	margin: 0;
+	padding: 0;
+	padding-top: 10px;
+	text-align: left;
+	vertical-align: top;
+	border: none;
+}
+
+.DocContainerRight
+{
+	width: 50%;
+	margin: 0;
+	padding-left: 5px;
+	padding-top: 10px;
+	text-align: left;
+	vertical-align: top;
+	border: none;
+}
+
+.DocTitleRow
+{
+	height: 20px;
+	padding: 0;
+	border: none;
+	border-bottom: 1px solid #1A5993;
+	border-left: outset 2px #1A5993;
+}
+
+.FalseLink
+{
+	/* CCT 28 June 2013 I338/2013
+	color: blue; */
+	color: #1A5993;
+	text-decoration: underline; 
+	/* CCT I67/2012 Mozilla standard is 'pointer' 
+	cursor: hand; */
+	cursor:pointer;
+}
+
+input
+{
+	/* CCT 8 Dec 2009 I1774/2009 Replaced MS Sans Serif with Arial */
+	/* ST 18/01/2011 I51/2011 - Fix radiobuttonlist layout in IE8 */
+	font-family: Arial;
+	font-size: 100%;
+	width: 210px;
+	border-collapse:collapse;
+	padding: 0;
+}
+
+.DocOutline
+{
+	text-align: left;
+	width: 100%;
+    border-collapse: collapse; 
+    border-spacing: 0;
+}
+
+.DocContainer
+{
+	text-align: left;
+	width:98%;
+	padding: 0;
+	border: none;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.DocContainerFull
+{
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	padding-top: 10px;
+	text-align: left;
+	vertical-align: top;
+	border: none;
+}
